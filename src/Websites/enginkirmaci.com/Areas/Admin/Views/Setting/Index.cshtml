@@ -1,0 +1,36 @@
+﻿@model SettingViewModel
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var pos = 0;
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Ayarlar</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="panel panel-default">
+        <form method="post" role="form">
+            <div class="panel-body">
+
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                @foreach (var setting in Model.Settings)
+                {
+                    <fieldset class="form-group col-md-6">
+                        <input type="text" name="settings[@pos].Key" value="@setting.Key" class="form-control" autofocus />
+                    </fieldset>
+                    <fieldset class="form-group col-md-6">
+                        <input type="text" name="settings[@pos].Value" value="@setting.Value" class="form-control" autofocus />
+                    </fieldset>
+                    pos++;
+                }
+            </div>
+            <div class="panel-footer">
+                <button name="SaveContent" type="submit" class="btn btn-primary" value="1"><i class="fa fa-floppy-o"></i> Kaydet</button>
+            </div>
+        </form>
+    </div>
+</div>

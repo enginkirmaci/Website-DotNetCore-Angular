@@ -1,0 +1,21 @@
+<div class="col-sm-12 col-lg-{{layout}}">
+    <a *ngIf="data.showTitle" [routerLink]="'/'+data.page.url">
+        <h2>{{data.page.title}}</h2>
+    </a>
+
+    <div *ngFor="let page of data.pages">
+        <div class="row pad-bottom20">
+            <div *ngIf="page.image?.path" class="pull-right pad20 mobile-hide" style="width: 30%">
+                <img [src]="page.image?.path" alt="" />
+            </div>
+
+            <a [routerLink]="'/'+page.url">
+                <h4 class="blog-title">{{page.title}}</h4>
+            </a>
+            <p>{{page.description}}</p>
+
+            <h6 class="date-title">{{page.createdDate | dateTimeFormat}}</h6>
+            <a [routerLink]="'/'+page.url" class="read-more">read more &rarr;</a>
+        </div>
+    </div>
+</div>

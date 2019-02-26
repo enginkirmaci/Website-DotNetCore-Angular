@@ -1,0 +1,14 @@
+<section>
+    <div class="container pad90">
+        <div *ngIf="data?.showTitle" class="row">
+            <h2 class="page-title">{{data?.title}}</h2>
+        </div>
+
+        <div *ngFor="let component of data?.components">
+            <content *ngIf="component.key=='content'" [data]="component.output" [layout]="component.layoutSize"></content>
+            <pagelist *ngIf="component.key=='pagelist'" [data]="component.output" [layout]="component.layoutSize"></pagelist>
+            <comments *ngIf="component.key=='comments'" [layout]="component.layoutSize"></comments>
+            <gallery *ngIf="component.key=='gallery'" [data]="component.output" [layout]="component.layoutSize"></gallery>
+        </div>
+    </div>
+</section>

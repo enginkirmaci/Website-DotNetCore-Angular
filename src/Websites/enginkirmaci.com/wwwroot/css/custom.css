@@ -1,0 +1,55 @@
+﻿.header.tiny {
+    background-color: #eee;
+}
+
+.row {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+.pad-bottom20 {
+    padding-bottom: 20px;
+}
+
+h4.blog-title {
+    font-size: 22px;
+}
+
+.navbar-brand h2 {
+    margin-top: 30px;
+}
+
+h2 {
+    margin-bottom: 0px;
+    font-weight: 200 !important;
+}
+
+    h2.page-title {
+        font-size: 2.4em;
+        padding-left: 15px;
+    }
+
+h4 {
+    font-weight: 600 !important;
+}
+
+hr {
+    border: 8px solid #eee;
+}
+
+#Section-6 {
+    background: #eee;
+}
+
+p,
+.read-more {
+    font-size: 14px;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+h6.date-title {
+    font-size: 12px;
+}

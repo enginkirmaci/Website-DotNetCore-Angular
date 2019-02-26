@@ -1,0 +1,8 @@
+<div class="col-sm-12 col-lg-{{layout}}">
+    <h2>{{data.gallery.title}}</h2>
+    <div *ngFor="let item of data.gallery.items">
+        <div class="col-sm-12 col-lg-{{12/data.gallery.column}}">
+            <img [src]="item.file.path" class="img-responsive">
+        </div>
+    </div>
+</div>

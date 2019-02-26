@@ -1,0 +1,242 @@
+﻿@model AdminViewModel
+
+@{
+    ViewBag.Title = "Sayfalar";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<link href="/Admin/Assets/css/jquery.treemenu.css" rel="stylesheet" />
+
+<div class="modal fade" id="imageExplorer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="z-index: 999;position: relative;right: 7px;top: 4px;">
+                &times;
+            </button>
+            <div class="modal-body">
+                <iframe src="/admin/assets/fileman/index.html?integration=custom&fieldId=uploadImage&modal=imageExplorer" style="width:100%;height:600px" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Sayfalar</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <a href="~/Admin/Page/?main=true" style="color: #000"><h4>Ana Menü</h4></a>
+                <tree pages="@Model.Pages" ul-class="tree" slug-url="@Model.SlugUrl"></tree>
+
+                <a href="~/Admin/Page/?other=true" style="color: #000"><h4>Diğer</h4></a>
+                <tree pages="@Model.OtherPages" ul-class="tree" slug-url="@Model.SlugUrl"></tree>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        @if (string.IsNullOrWhiteSpace(Model.SlugUrl) && !Model.isMain && !Model.isOther && !Model.isNewPage)
+        {
+            <h4><i class="fa fa-caret-left"></i> Lütfen bir sayfa seçiniz</h4>
+        }
+        else
+        {
+            <ul class="nav nav-tabs">
+                @if (!Model.isMain && !Model.isOther)
+                {
+                    <li>
+                        <a href="#pageTab" data-toggle="tab">Sayfa</a>
+                    </li>
+                }
+                @if (!Model.isMain && !Model.isOther && !Model.isNewPage)
+                {
+                    <li>
+                        <a href="#contentTab" data-toggle="tab">Modüller</a>
+                    </li>
+                }
+                @if (!Model.isNewPage)
+                {
+                    <li>
+                        <a href="#subPageTab" data-toggle="tab">Alt Sayfalar</a>
+                    </li>
+                }
+            </ul>
+            <div class="tab-content">
+                @if (!Model.isMain && !Model.isOther)
+                {
+                    <div class="tab-pane fade" id="pageTab">
+                        <div class="row">
+                            <div class="panel panel-default">
+                                @using (Html.BeginForm())
+                                {
+                                    @Html.ValidationSummary(true);
+
+                                    <input type="hidden" name="Model.SelectedPage.Id" value="@Model.SelectedPage.Id" />
+                                    <input type="hidden" name="Model.SelectedPage.WebsiteGuid" value="@Model.SelectedPage.WebsiteGuid" />
+                                    <input type="hidden" name="Model.SelectedPage.ParentId" value="@Model.SelectedPage.ParentId" />
+                                    <input type="hidden" name="Model.SelectedPage.Priorty" value="@Model.SelectedPage.Priorty" />
+                                    <input type="hidden" name="Model.SelectedPage.Type" value="@Model.SelectedPage.Type" />
+                                    <input type="hidden" name="Model.SelectedPage.SlugUrl" value="@Model.SelectedPage.SlugUrl" class="slugUrlValue" />
+                                    <input type="hidden" name="Model.SelectedPage.OldSlugUrl" value="@Model.SelectedPage.SlugUrl" />
+                                    <input type="hidden" name="Model.isNewPage" value="@Model.isNewPage.ToString().ToLower()" />
+
+                                    <div class="panel-body">
+                                        <fieldset class="form-group">
+                                            <label>Başlık *</label>
+                                            <input type="text" name="Model.SelectedPage.Title" value="@Model.SelectedPage.Title" class="form-control slugUrl" placeholder="Sayfa başlığı yazınız" autofocus required />
+
+                                            <label>
+                                                <input type="checkbox" name="Model.SelectedPage.ShowPageTitle" @(Model.SelectedPage.ShowPageTitle ? "checked=checked" : string.Empty) /> Başlığı sayfada göster
+                                            </label>
+                                        </fieldset>
+                                        <fieldset>
+                                            <b>Url</b> <span class="text-muted">@(@Model.SelectedPage.Parent != null ? Model.SelectedPage.Parent.BuildSlugUrl() : string.Empty)/<span class="slugUrlHtml"></span></span>
+                                        </fieldset>
+                                        <fieldset>
+                                            <label>Sayfa Görseli</label>
+                                            <p>
+                                                <a href="#" data-toggle="modal" data-target="#imageExplorer" class="btn btn-default">
+                                                    <i class="fa fa-picture-o"></i> Görsel Seç
+                                                </a>
+                                                <a href="javascript:RemoveSrc('uploadImage');" class="btn btn-default">
+                                                    <i class="fa fa-trash-o"></i> Görseli Kaldır
+                                                </a>
+                                            </p>
+
+                                            <input type="hidden" name="Model.SelectedPage.Files[0].Id" value="@(Model.SelectedPage.HeaderImage != null ? Model.SelectedPage.HeaderImage.Id: 0)" />
+                                            <input type="hidden" name="Model.SelectedPage.Files[0].PageId" value="@(Model.SelectedPage.HeaderImage != null ? Model.SelectedPage.HeaderImage.PageId : 0)" />
+                                            <input type="hidden" name="Model.SelectedPage.Files[0].Code" value="header-img" />
+                                            <input type="hidden" name="Model.SelectedPage.Files[0].Type" value="1" />
+                                            <input type="hidden" name="Model.SelectedPage.Files[0].Url" id="uploadImageHidden" value="@(Model.SelectedPage.HeaderImage!=null ? Model.SelectedPage.HeaderImage.Url : string.Empty)" />
+
+                                            <img id="uploadImage" src="@(Model.SelectedPage.HeaderImage!=null ? Model.SelectedPage.HeaderImage.Url : string.Empty)" class="img-responsive" />
+                                        </fieldset>
+
+                                        <fieldset class="form-group">
+                                            <label>
+                                                <input type="checkbox" name="Model.SelectedPage.ShowChildMenu" @(Model.SelectedPage.ShowChildMenu ? "checked=checked" : string.Empty) /> Alt sayfaları menüde göster
+                                            </label>
+                                        </fieldset>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <button name="Save" type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Kaydet</button>
+                                        @if (!Model.isNewPage)
+                                        {
+                                            <a href="~/@Model.SelectedPage.BuildSlugUrl()" target="_blank" class="btn btn-default"><i class="fa fa-eye"></i> Göster</a>
+
+                                            <!-- TODO name olayında sıkıntı var kaydedip silme yapılınca oluyor -->
+                                            <button name="Delete" type="submit" class="btn btn-outline btn-danger pull-right" data-confirm-text="Silmek istediğinizden emin misiniz?"><i class="fa fa-trash-o"></i> Sil</button>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                @if (!Model.isMain && !Model.isOther && !Model.isNewPage)
+                {
+                    <div class="tab-pane fade" id="contentTab">
+                        <div class="row">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    @{
+                                        var contentIndex = 0;
+
+                                        foreach (var content in Model.SelectedPage.Content.OrderBy(i => i.Priorty))
+                                        {
+                                            contentIndex++;
+
+                                            <div class="col-md-@(content.LayoutSize.HasValue? content.LayoutSize.Value:12)">
+                                                <div class="module">
+                                                    <h4 style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;">@content.Title &nbsp;<br /><small>@(content.Type.HasValue ? Enum.Parse(typeof(ContentType), content.Type.Value.ToString()).ToString() : string.Empty)</small></h4>
+
+                                                    <div>
+                                                        <a href="~/Admin/Page/Module/?page=@Model.SelectedPage.SlugUrl&id=@content.Id"><i class="fa fa-pencil"></i> Düzenle</a>
+                                                        <div class="pull-right">
+                                                            @if (contentIndex != 1)
+                                                            {
+                                                                <a href="~/Admin/Page/?page=@Model.SelectedPage.SlugUrl&contentId=@content.Id&upDown=true"><i class="fa fa-arrow-up"></i></a>
+                                                            }
+                                                            @if (contentIndex != Model.SelectedPage.Content.Count())
+                                                            {
+                                                                <a href="~/Admin/Page/?page=@Model.SelectedPage.SlugUrl&contentId=@content.Id&upDown=false"><i class="fa fa-arrow-down"></i></a>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                                <div class="panel-footer">
+                                    <a href="~/Admin/Page/Module/?newModule=true&page=@Model.SelectedPage.SlugUrl" class="btn btn-default"><i class="fa fa-plus"></i> Ekle</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                        }
+
+                @if (!Model.isNewPage)
+                {
+                    <div class="tab-pane fade" id="subPageTab">
+                        <div class="row">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Sayfa Adı</th>
+                                                    <th>Url</th>
+                                                    <th>İşlemler</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    var childIndex = 0;
+
+                                                    foreach (var childPage in Model.SelectedPage.Childs)
+                                                    {
+                                                        childIndex++;
+                                                        <tr>
+                                                            <td>@childIndex</td>
+                                                            <td>@childPage.Title</td>
+                                                            <td>/@childPage.SlugUrl</td>
+                                                            <td>
+                                                                <a href="~/Admin/Page/?page=@childPage.SlugUrl"><i class="fa fa-pencil"></i> Düzenle</a>
+                                                                @if (childIndex != 1)
+                                                                {
+                                                                    <a href="~/Admin/Page/?page=@childPage.SlugUrl&upDown=true"><i class="fa fa-arrow-up"></i></a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span style="margin-left:17px;"></span>
+                                                                }
+                                                                @if (childIndex != Model.SelectedPage.Childs.Count())
+                                                                {
+                                                                    <a href="~/Admin/Page/?page=@childPage.SlugUrl&upDown=false"><i class="fa fa-arrow-down"></i></a>
+                                                                }
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="panel-footer">
+                                    <a href="~/Admin/Page/?newPage=true&Parent=@Model.SelectedPage.SlugUrl" class="btn btn-default"><i class="fa fa-plus"></i> Sayfa Ekle</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                                    }
+            </div>
+                                                    }
+    </div>
+</div>

@@ -1,0 +1,98 @@
+﻿@model Admin.Models.NewsModel
+@using Entities
+@using Entities.Enums
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="modal fade" id="imageExplorer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="z-index: 999;position: relative;right: 7px;top: 4px;">
+                &times;
+            </button>
+            <div class="modal-body">
+                <iframe src="/fileman/index.html?integration=custom&fieldId=uploadImage&modal=imageExplorer" style="width:100%;height:600px" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">
+            <a href="~/Admin/News"><i class="fa fa-chevron-left"></i> </a>
+            @ViewBag.Title
+        </h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="panel panel-default">
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true);
+
+            <input type="hidden" name="Model.SelectedPage.Id" value="@Model.SelectedPage.Id" />
+            <input type="hidden" name="Model.SelectedPage.WebsiteGuid" value="@Model.SelectedPage.WebsiteGuid" />
+            <input type="hidden" name="Model.SelectedPage.SlugUrl" value="@Model.SelectedPage.SlugUrl" class="slugUrlValue" />
+            <input type="hidden" name="Model.SelectedPage.OldSlugUrl" value="@Model.SelectedPage.SlugUrl" />
+            <input type="hidden" name="Model.isNewPage" value="@Model.isNew.ToString().ToLower()" />
+
+            <div class="panel-body">
+                <fieldset class="form-group">
+                    <label>Başlık *</label>
+                    <input type="text" name="Model.SelectedPage.Title" value="@Model.SelectedPage.Title" class="form-control slugUrl" placeholder="Sayfa başlığı yazınız" autofocus required />
+                </fieldset>
+                <fieldset>
+                    <b>Url</b> <span class="text-muted">@(@Model.SelectedPage.ParentPage != null ? Model.SelectedPage.ParentPage.BuildSlugUrl() : string.Empty)/<span class="slugUrlHtml"></span></span>
+                </fieldset>
+                <fieldset>
+                    <label>Sayfa Görseli</label>
+                    <p>
+                        <a href="#" data-toggle="modal" data-target="#imageExplorer" class="btn btn-default">
+                            <i class="fa fa-picture-o"></i> Görsel Seç
+                        </a>
+                        <a href="javascript:RemoveSrc('uploadImage');" class="btn btn-default">
+                            <i class="fa fa-trash-o"></i> Görseli Kaldır
+                        </a>
+                    </p>
+
+                    <input type="hidden" name="Model.SelectedPage.Files[0].Id" value="@(Model.SelectedPage.HeaderImage != null ? Model.SelectedPage.HeaderImage.Id: 0)" />
+                    <input type="hidden" name="Model.SelectedPage.Files[0].PageId" value="@(Model.SelectedPage.HeaderImage != null ? Model.SelectedPage.HeaderImage.PageId : 0)" />
+                    <input type="hidden" name="Model.SelectedPage.Files[0].Code" value="header-img" />
+                    <input type="hidden" name="Model.SelectedPage.Files[0].Type" value="1" />
+                    <input type="hidden" name="Model.SelectedPage.Files[0].Url" id="uploadImageHidden" value="@(Model.SelectedPage.HeaderImage!=null ? Model.SelectedPage.HeaderImage.Url : string.Empty)" />
+
+                    <img id="uploadImage" src="@(Model.SelectedPage.HeaderImage!=null ? Model.SelectedPage.HeaderImage.Url : string.Empty)" class="img-responsive" />
+                </fieldset>
+                <fieldset class="form-group">
+                    <label>İçerik</label>
+                    @{
+                        var defaultContent = Model.SelectedPage.Contents.Where(i => i.Type == ContentType.Default).FirstOrDefault();
+
+                        <input type="hidden" name="Model.SelectedPage.Contents[0].Code" value="default" />
+                        <input type="hidden" name="Model.SelectedPage.Contents[0].Type" value="@ContentType.Default" />
+                        <input type="hidden" name="Model.SelectedPage.Contents[0].Id" value="@(defaultContent != null ? defaultContent.Id : 0)" />
+                        <input type="hidden" name="Model.SelectedPage.Contents[0].PageId" value="@(defaultContent != null ? defaultContent.PageId : 0)" />
+
+                        <textarea name="Model.SelectedPage.Contents[0].Value.Text">
+                            @(defaultContent != null ? defaultContent.Text : string.Empty)
+                        </textarea>
+                    }
+                </fieldset>
+            </div>
+            <div class="panel-footer">
+                <button name="Save" type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Kaydet</button>
+                @if (!Model.isNew)
+                {
+                    <a href="~/@Model.SelectedPage.BuildSlugUrl()" target="_blank" class="btn btn-default"><i class="fa fa-eye"></i> Göster</a>
+
+                                                    <!-- TODO name olayında sıkıntı var kaydedip silme yapılınca oluyor -->
+                    <button name="Delete" type="submit" class="btn btn-outline btn-danger pull-right" data-confirm-text="Silmek istediğinizden emin misiniz?"><i class="fa fa-trash-o"></i> Sil</button>
+                }
+            </div>
+                        }
+    </div>
+</div>

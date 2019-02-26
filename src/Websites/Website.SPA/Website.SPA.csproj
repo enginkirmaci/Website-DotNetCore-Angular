@@ -1,0 +1,239 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <IsPackable>false</IsPackable>
+    <UserSecretsId>8b5cd940-7fb5-4d26-a53b-1ae52ba4567b</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
+    <PackageReference Include="Serilog.AspNetCore" Version="2.1.0" />
+    <PackageReference Include="Serilog.Sinks.MSSqlServerCore" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
+    <Content Remove="ClientApp\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Content\about\me.jpg" />
+    <None Include="wwwroot\Content\blog\custom-filters\ColorPaletteFD0lter.PNG" />
+    <None Include="wwwroot\Content\blog\custom-filters\CornerDetection.png" />
+    <None Include="wwwroot\Content\blog\custom-filters\PixelInterpolation.PNG" />
+    <None Include="wwwroot\Content\blog\custom-filters\QuadTransformation.png" />
+    <None Include="wwwroot\Content\blog\custom-filters\ThresholdFilter.PNG" />
+    <None Include="wwwroot\Content\blog\filter-and-custom-filter-management-framework\ArchitectureWPImaging.png" />
+    <None Include="wwwroot\Content\blog\filter-and-custom-filter-management-framework\factoryDiagram.png" />
+    <None Include="wwwroot\Content\blog\filter-and-custom-filter-management-framework\problem1.png" />
+    <None Include="wwwroot\Content\blog\otsu-threshold\CustomFilters_Original.jpg" />
+    <None Include="wwwroot\Content\blog\otsu-threshold\OtsuThresholdEffect.jpg" />
+    <None Include="wwwroot\Content\projects\haberler\1.png" />
+    <None Include="wwwroot\Content\projects\haberler\2.png" />
+    <None Include="wwwroot\Content\projects\haberler\3.png" />
+    <None Include="wwwroot\Content\projects\haberler\4.png" />
+    <None Include="wwwroot\Content\projects\haberler\5.png" />
+    <None Include="wwwroot\Content\projects\haberler\6.png" />
+    <None Include="wwwroot\Content\projects\haberler\7.png" />
+    <None Include="wwwroot\Content\projects\haberler\haberler.jpg" />
+    <None Include="wwwroot\Content\projects\haberler\Logo 300x300.png" />
+    <None Include="wwwroot\Content\projects\marketbutton.png" />
+    <None Include="wwwroot\Content\projects\quickscan\1.png" />
+    <None Include="wwwroot\Content\projects\quickscan\2.png" />
+    <None Include="wwwroot\Content\projects\quickscan\3.png" />
+    <None Include="wwwroot\Content\projects\quickscan\4.png" />
+    <None Include="wwwroot\Content\projects\quickscan\5.png" />
+    <None Include="wwwroot\Content\projects\quickscan\6.png" />
+    <None Include="wwwroot\Content\projects\quickscan\7.png" />
+    <None Include="wwwroot\Content\projects\quickscan\8.png" />
+    <None Include="wwwroot\Content\projects\quickscan\ApplicationIcon.png" />
+    <None Include="wwwroot\Content\projects\quickscan\quickscan.jpg" />
+    <None Include="wwwroot\Content\projects\themely\1.png" />
+    <None Include="wwwroot\Content\projects\themely\2.png" />
+    <None Include="wwwroot\Content\projects\themely\3.png" />
+    <None Include="wwwroot\Content\projects\themely\4.png" />
+    <None Include="wwwroot\Content\projects\themely\5.png" />
+    <None Include="wwwroot\Content\projects\themely\6.png" />
+    <None Include="wwwroot\Content\projects\themely\7.png" />
+    <None Include="wwwroot\Content\projects\themely\8.png" />
+    <None Include="wwwroot\Content\projects\themely\MarketLogo_300x300.png" />
+    <None Include="wwwroot\Content\projects\themely\themepack.jpg" />
+    <None Include="wwwroot\css\bootstrap.min.css" />
+    <None Include="wwwroot\css\custom.css" />
+    <None Include="wwwroot\css\font-awesome.min.css" />
+    <None Include="wwwroot\css\lightblue_colour.css" />
+    <None Include="wwwroot\css\style.css" />
+    <None Include="wwwroot\font\ecoicons\ecoicon.dev.svg" />
+    <None Include="wwwroot\font\ecoicons\ecoicon.eot" />
+    <None Include="wwwroot\font\ecoicons\ecoicon.svg" />
+    <None Include="wwwroot\font\ecoicons\ecoicon.ttf" />
+    <None Include="wwwroot\font\ecoicons\ecoicon.woff" />
+    <None Include="wwwroot\font\fontawesome-webfont.eot" />
+    <None Include="wwwroot\font\fontawesome-webfont.svg" />
+    <None Include="wwwroot\font\fontawesome-webfont.ttf" />
+    <None Include="wwwroot\font\fontawesome-webfont.woff" />
+    <None Include="wwwroot\font\FontAwesome.otf" />
+    <None Include="wwwroot\img\big_image.jpg" />
+    <None Include="wwwroot\img\big_image2.jpg" />
+    <None Include="wwwroot\img\big_image3.jpg" />
+    <None Include="wwwroot\img\blog\avatar1.jpg" />
+    <None Include="wwwroot\img\blog\avatar2.jpg" />
+    <None Include="wwwroot\img\blog\blog_post1.jpg" />
+    <None Include="wwwroot\img\blog\blog_post2.jpg" />
+    <None Include="wwwroot\img\blog\blog_post3.jpg" />
+    <None Include="wwwroot\img\blog\my_avatar.jpg" />
+    <None Include="wwwroot\img\blue-marker.png" />
+    <None Include="wwwroot\img\clients\client1.png" />
+    <None Include="wwwroot\img\clients\client2.png" />
+    <None Include="wwwroot\img\clients\client3.png" />
+    <None Include="wwwroot\img\divider.png" />
+    <None Include="wwwroot\img\gallery\Design\design1.jpg" />
+    <None Include="wwwroot\img\gallery\Design\design2.jpg" />
+    <None Include="wwwroot\img\gallery\Design\design3.jpg" />
+    <None Include="wwwroot\img\gallery\Design\design4.jpg" />
+    <None Include="wwwroot\img\gallery\Design\design5.jpg" />
+    <None Include="wwwroot\img\gallery\Design\design6.jpg" />
+    <None Include="wwwroot\img\gallery\Design\thumbnails\design1.jpg" />
+    <None Include="wwwroot\img\gallery\Design\thumbnails\design2.jpg" />
+    <None Include="wwwroot\img\gallery\Design\thumbnails\design3.jpg" />
+    <None Include="wwwroot\img\gallery\Design\thumbnails\design4.jpg" />
+    <None Include="wwwroot\img\gallery\Design\thumbnails\design5.jpg" />
+    <None Include="wwwroot\img\gallery\Design\thumbnails\design6.jpg" />
+    <None Include="wwwroot\img\gradient.png" />
+    <None Include="wwwroot\img\green-marker.png" />
+    <None Include="wwwroot\img\lightblue-marker.png" />
+    <None Include="wwwroot\img\loader.gif" />
+    <None Include="wwwroot\img\logo.png" />
+    <None Include="wwwroot\img\marker.png" />
+    <None Include="wwwroot\img\orange-marker.png" />
+    <None Include="wwwroot\img\overlay1.png" />
+    <None Include="wwwroot\img\overlay2.png" />
+    <None Include="wwwroot\img\parallax-1.jpg" />
+    <None Include="wwwroot\img\parallax-2.jpg" />
+    <None Include="wwwroot\img\parallax-3.jpg" />
+    <None Include="wwwroot\img\peach-marker.png" />
+    <None Include="wwwroot\img\peagreen-marker.png" />
+    <None Include="wwwroot\img\pink-marker.png" />
+    <None Include="wwwroot\img\small\1.jpg" />
+    <None Include="wwwroot\img\small\10.jpg" />
+    <None Include="wwwroot\img\small\11.jpg" />
+    <None Include="wwwroot\img\small\12.jpg" />
+    <None Include="wwwroot\img\small\13.jpg" />
+    <None Include="wwwroot\img\small\14.jpg" />
+    <None Include="wwwroot\img\small\2.jpg" />
+    <None Include="wwwroot\img\small\3.jpg" />
+    <None Include="wwwroot\img\small\4.jpg" />
+    <None Include="wwwroot\img\small\5.jpg" />
+    <None Include="wwwroot\img\small\6.jpg" />
+    <None Include="wwwroot\img\small\7.jpg" />
+    <None Include="wwwroot\img\small\8.jpg" />
+    <None Include="wwwroot\img\small\9.jpg" />
+    <None Include="wwwroot\img\small\small_1.jpg" />
+    <None Include="wwwroot\img\small\small_2.jpg" />
+    <None Include="wwwroot\img\small\small_3.jpg" />
+    <None Include="wwwroot\img\small\small_4.jpg" />
+    <None Include="wwwroot\img\small\small_5.jpg" />
+    <None Include="wwwroot\img\status-blue.gif" />
+    <None Include="wwwroot\img\status-green.gif" />
+    <None Include="wwwroot\img\status-orange.gif" />
+    <None Include="wwwroot\img\status-peach.gif" />
+    <None Include="wwwroot\img\status-peagreen.gif" />
+    <None Include="wwwroot\img\status-pink.gif" />
+    <None Include="wwwroot\img\status-red.gif" />
+    <None Include="wwwroot\img\status-turquoise.gif" />
+    <None Include="wwwroot\img\status-yellow.gif" />
+    <None Include="wwwroot\img\status=pink.gif" />
+    <None Include="wwwroot\img\team\1.jpg" />
+    <None Include="wwwroot\img\team\2.jpg" />
+    <None Include="wwwroot\img\team\3.jpg" />
+    <None Include="wwwroot\img\team\4.jpg" />
+    <None Include="wwwroot\img\team\5.jpg" />
+    <None Include="wwwroot\img\team\6.jpg" />
+    <None Include="wwwroot\img\team\big-slider1.jpg" />
+    <None Include="wwwroot\img\team\big-slider2.jpg" />
+    <None Include="wwwroot\img\team\full-1.jpg" />
+    <None Include="wwwroot\img\team\project1a.jpg" />
+    <None Include="wwwroot\img\team\project1b.jpg" />
+    <None Include="wwwroot\img\top_image.jpg" />
+    <None Include="wwwroot\img\turquoise-marker.png" />
+    <None Include="wwwroot\img\yellow-marker.png" />
+    <None Include="wwwroot\js\bootstrap.min.js" />
+    <None Include="wwwroot\js\jquery.appear.js" />
+    <None Include="wwwroot\js\jquery.flexslider-min.js" />
+    <None Include="wwwroot\js\jquery.js" />
+    <None Include="wwwroot\js\jquery.lettering.js" />
+    <None Include="wwwroot\js\jquery.localscroll-1.2.7-min.js" />
+    <None Include="wwwroot\js\jquery.scrollTo.min.js" />
+    <None Include="wwwroot\js\jquery.stackslider.js" />
+    <None Include="wwwroot\js\lightblue_scripts.js" />
+    <None Include="wwwroot\js\modernizr.custom.js" />
+    <None Include="wwwroot\js\respond.min.js" />
+    <None Include="wwwroot\js\retina.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Common\src\Common.Entities\Common.Entities.csproj" />
+    <ProjectReference Include="..\..\..\..\Common\src\Common.Utilities\Common.Utilities.csproj" />
+    <ProjectReference Include="..\..\..\..\Common\src\Common.Web\Common.Web.csproj" />
+    <ProjectReference Include="..\..\Website.Components\Website.Component.Content\Website.Component.Content.csproj" />
+    <ProjectReference Include="..\..\Website.Components\Website.Component.Gallery\Website.Component.Gallery.csproj" />
+    <ProjectReference Include="..\..\Website.Components\Website.Component.PageList\Website.Component.PageList.csproj" />
+    <ProjectReference Include="..\..\Website.Core\Website.Core.Application\Website.Core.Application.csproj" />
+    <ProjectReference Include="..\..\Website.Core\Website.Core.Common\Website.Core.Common.csproj" />
+    <ProjectReference Include="..\..\Website.Core\Website.Core.Models\Website.Core.Models.csproj" />
+    <ProjectReference Include="..\..\Website.Core\Website.Core.System\Website.Core.System.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Infrastructure\" />
+  </ItemGroup>
+
+<Target Name="GatherAllFilesToPublish">
+</Target>
+
+  <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
+    <!-- Ensure Node.js is installed -->
+    <Exec Command="node --version" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+    </Exec>
+    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+
+    <!-- In development, the dist files won't exist on the first run or when cloning to
+         a different machine, so rebuild them if not already present. -->
+    <Message Importance="high" Text="Performing first-run Webpack build..." />
+    <Exec Command="node node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js" />
+    <Exec Command="node node_modules/webpack/bin/webpack.js" />
+  </Target>
+
+  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+    <Exec Command="npm install" />
+    <Exec Command="node node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js --env.prod" />
+    <Exec Command="node node_modules/webpack/bin/webpack.js --env.prod" />
+
+    <!-- Include the newly-built files in the publish output -->
+    <ItemGroup>
+      <DistFiles Include="wwwroot\dist\**; ClientApp\dist\**" />
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>%(DistFiles.Identity)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+
+</Project>

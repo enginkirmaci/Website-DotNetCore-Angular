@@ -1,0 +1,86 @@
+@model PageViewModel
+@inject IWebsiteService websiteService
+
+<section>
+    <div class="container pad90">
+        @if (Model.Page.ShowPageTitle)
+        {
+            <div class="row">
+                <h2 class="page-title">@Model.Page.Title</h2>
+            </div>
+        }
+        <div class="row">
+            @foreach (var content in Model.Page.Content.OrderBy(i => i.Priorty))
+            {
+                @switch (content.Type)
+                {
+                    case (int)ContentType.Text:
+                        <div class="col-sm-12 col-lg-@content.LayoutSize">
+                            <h2>@content.Title</h2>
+                            @Html.Raw(content.Text)
+                        </div>
+                        break;
+
+                    case (int)ContentType.Gallery:
+                        @Html.Raw(content.Text)
+                        break;
+
+                    case (int)ContentType.PageList:
+                        var currentPage = Model.Page;
+                        if (!string.IsNullOrWhiteSpace(content.Settings_SlugUrl))
+                        {
+                            currentPage = websiteService.GetPageBySlug(content.Settings_SlugUrl);
+                        }
+
+                        if (currentPage != null && currentPage.Childs.Count() != 0)
+                        {
+                            <div class="col-sm-12 col-lg-@content.LayoutSize">
+                                <a href="@currentPage.SlugUrl"><h2>@(content.Title)</h2></a>
+                                @foreach (var page in currentPage.Childs.OrderByDescending(i => i.CreatedDate).Take(content.Settings_ItemCount))
+                                {
+                                    <div class="row pad-bottom20">
+                                        @if (page.HeaderImage != null)
+                                        {
+                                            <div class="pull-right pad20 mobile-hide" style="width:30%">
+                                                <img src="@(page.HeaderImage.Url)" alt="" />
+                                            </div>
+                                        }
+
+                                        <a href="@(page.SlugUrl)">
+                                            <h4 class="blog-title">@(page.Title)</h4>
+                                        </a>
+                                        @Html.Raw(page.Content.FirstOrDefault(i => i.Title == "Description")?.Text)
+                                        <h6 class="date-title">@Converter.DateTime.ToMonthDayYear(page.CreatedDate)</h6>
+
+                                        <a href="@(page.SlugUrl)" class="read-more">read more &rarr;</a>
+                                    </div>
+                                }
+                            </div>
+                        }
+
+                        break;
+
+                    case (int)ContentType.Comment:
+                        <div style="clear:both"></div>
+
+                        <h2>@content.Title</h2>
+                        @Html.Raw(content.Text)
+                        <div id="disqus_thread"></div>
+                        <script>
+
+                            (function () {  // DON'T EDIT BELOW THIS LINE
+                                var d = document, s = d.createElement('script');
+
+                                s.src = '//enginkirmaci.disqus.com/embed.js';
+
+                                s.setAttribute('data-timestamp', +new Date());
+                                (d.head || d.body).appendChild(s);
+                            })();
+                        </script>
+                        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+                        break;
+                }
+            }
+        </div>
+    </div>
+</section>

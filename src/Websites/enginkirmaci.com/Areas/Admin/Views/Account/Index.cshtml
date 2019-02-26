@@ -1,0 +1,59 @@
+﻿@model LoginViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Login</title>
+
+    <link href="/Admin/Assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/Admin/Assets/css/sb-admin-2.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Yönetim Paneli</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form asp-area="Admin" asp-controller="Account" asp-action="Index" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+                            <fieldset>
+                                <div asp-validation-summary="All" class="text-danger"></div>
+                                <div class="form-group">
+                                    <label asp-for="Email"></label>
+                                    <input asp-for="Email" />
+                                    <br />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Password"></label>
+                                    <input asp-for="Password" />
+                                    <br />
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input asp-for="RememberMe" />
+                                    <label asp-for="RememberMe" class="rememberme"></label>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="button">Giriş</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+﻿@model Admin.Models.NewsModel
+@using Entities
+@using Entities.Enums
+
+@{
+    ViewBag.Title = "Haberler";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Haberler</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Başlık</th>
+                            <th>Tarihi</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var childIndex = 0;
+
+                            foreach (var childPage in Model.News)
+                            {
+                                childIndex++;
+                                <tr>
+                                    <td>@childIndex</td>
+                                    <td>@childPage.Title</td>
+                                    <td>@(childPage.CreatedDate.HasValue ? childPage.CreatedDate.Value.ToString("f") : string.Empty)</td>
+                                    <td>
+                                        <a href="~/@childPage.BuildSlugUrl()" target="_blank"><i class="fa fa-eye"></i> Göster</a>
+                                        <a href="~/Admin/News/Edit/?page=@childPage.SlugUrl"><i class="fa fa-pencil"></i> Düzenle</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <a href="~/Admin/News/Edit?newPage=true" class="btn btn-default"><i class="fa fa-plus"></i> Haber Ekle</a>
+        </div>
+    </div>
+</div>

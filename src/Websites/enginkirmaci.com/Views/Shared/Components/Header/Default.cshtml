@@ -1,0 +1,25 @@
+﻿@model MasterViewModel
+
+<header>
+    <div class="navbar">
+        <div class="header tiny">
+            <a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" href="#">
+                <i class="fa fa-align-justify fa-2x"></i>
+            </a>
+
+            <a href="/" class="navbar-brand"><h2>Engin KIRMACI</h2></a>
+            @*<a href="#top"><img src="@Model.Website.ImageUrl" alt="" class="navbar-brand" /></a>*@
+
+            <div class="nav-collapse collapse navbar-collapse">
+                <ul class="nav navbar-nav pull-right">
+                    @foreach (var item in Model.Menu)
+                    {
+                        <li class="@(@Model.SlugUrl.Contains(item.SlugUrl) ? " active" : "" )">
+                            <a href="/@item.SlugUrl">@item.Title</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>

@@ -1,0 +1,38 @@
+﻿<div class="clearfix"></div>
+
+<section class="pad90">
+
+    <div class="container text-center white">
+        <div class="m-auto">
+            @if (Model is BaseException)
+            {
+                if (Model.Code == 1)
+                {
+                    <h1>500</h1>
+                        <h3>
+                            Bilinmeyen bir hata oluştu. Lütfen tekrar deneyiniz.
+                        </h3>
+                }
+                else
+                {
+                    <h1>@Model.Code</h1>
+                        <h3 class="subheading mt0 mb50">
+                            @Model.Message
+                        </h3>
+                }
+
+                <br />
+                    <h5 class="subheading mt0 mb50">Anasayfaya gitmek için aşağıdaki butona tıklayınız.</h5>
+            }
+            else
+            {
+                <h1>404</h1>
+                    <h3>Böyle bir sayfa bulunamadı.</h3>
+
+                    <br />
+                    <h5 class="subheading mt0 mb50">Anasayfaya gitmek için aşağıdaki butona tıklayınız.</h5>
+            }
+            <a href="/" class="btn btn-circle btn-sm btn-md btn-primary">Anasayfa</a>
+        </div>
+    </div>
+</section>
